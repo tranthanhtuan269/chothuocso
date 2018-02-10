@@ -9,7 +9,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Roles</div>
                     <div class="panel-body">
-                        <a target="_self" href="{{ url('/admin/roles/create') }}" class="btn btn-success btn-sm" title="Add New Role">
+                        <a href="{{ url('/admin/roles/create') }}" class="btn btn-success btn-sm" title="Add New Role">
                             <i class="fa fa-plus" aria-hidden="true"></i> Add New
                         </a>
 
@@ -38,10 +38,10 @@
                                 @foreach($roles as $item)
                                     <tr>
                                         <td>{{ $item->id }}</td>
-                                        <td><a target="_self" href="{{ url('/admin/roles', $item->id) }}">{{ $item->name }}</a></td><td>{{ $item->label }}</td>
+                                        <td><a href="{{ url('/admin/roles', $item->id) }}">{{ $item->name }}</a></td><td>{{ $item->label }}</td>
                                         <td>
-                                            <a target="_self" href="{{ url('/admin/roles/' . $item->id) }}" title="View Role"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
-                                            <a target="_self" href="{{ url('/admin/roles/' . $item->id . '/edit') }}" title="Edit Role"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
+                                            <a href="{{ url('/admin/roles/' . $item->id) }}" title="View Role"><button class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i> View</button></a>
+                                            <a href="{{ url('/admin/roles/' . $item->id . '/edit') }}" title="Edit Role"><button class="btn btn-primary btn-xs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button></a>
                                             {!! Form::open([
                                                 'method' => 'DELETE',
                                                 'url' => ['/admin/roles', $item->id],

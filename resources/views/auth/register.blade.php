@@ -78,7 +78,7 @@
                             <label for="password-confirm" class="col-md-4 control-label">Bạn là</label>
 
                             <div class="col-md-6">
-                                <?php echo Form::select('type', array('0' => 'Người Tìm Việc', '1' => 'Nhà Tuyển Dụng'), 0, array('class' => 'form-control')); ?>
+                                <?php echo Form::select('type', array('0' => 'Người Mua Thuốc', '1' => 'Nhà Sản Xuất'), 0, array('class' => 'form-control')); ?>
                             </div>
                         </div>
 

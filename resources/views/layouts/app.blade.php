@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <base href="{{ url('/') }}" target="_blank">
+    <base href="{{ url('/') }}" target="_self">
     <title>{{ config('app.name', 'Gmon') }}</title>
     <!-- bootstrap -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

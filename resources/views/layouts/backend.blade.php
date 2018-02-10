@@ -8,14 +8,11 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <base href="{{ url('/') }}" target="_self">
-
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Styles -->
         <link href="{{ url('/') }}/public/css/app.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link href="{{ url('/') }}/public/css/admin.css" rel="stylesheet">
 
         <!-- Scripts -->
         <script>
@@ -38,7 +35,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a target="_self" target="_self" class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -46,27 +43,24 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li><a target="_self" target="_self" href="{{ url('/admin') }}">Dashboard <span class="sr-only">(current)</span></a></li>
+                        <li><a href="{{ url('/admin') }}">Dashboard <span class="sr-only">(current)</span></a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a target="_self" target="_self" href="{{ url('/login') }}">Login</a></li>
-                            <li><a target="_self" target="_self" href="{{ url('/register') }}">Register</a></li>
+                            <li><a href="{{ url('/login') }}">Login</a></li>
+                            <li><a href="{{ url('/register') }}">Register</a></li>
                         @else
                             <li class="dropdown">
-                                <a target="_self" target="_self" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <ul class="dropdown-menu" role="menu">
-                                    @if(Auth::check() && Auth::user()->hasRole('creator'))
-                                    <li><a target="_self" href="{{ url('/post/create') }}">Create Post</a></li>
-                                    @endif
                                     <li>
-                                        <a target="_self" target="_self" href="{{ url('/logout') }}"
+                                        <a href="{{ url('/logout') }}"
                                             onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                             Logout
@@ -98,13 +92,12 @@
         <hr/>
 
         <div class="container">
-            &copy; {{ date('Y') }}. Created by <a target="_self" target="_self" href="http://gmon.vn">Gmon.vn</a>
+            &copy; {{ date('Y') }}. Created by <a href="http://www.appzcoder.com">AppzCoder</a>
             <br/>
         </div>
 
         <!-- Scripts -->
         <script src="{{ url('/') }}/public/js/app.js"></script>
-        <script src="{{ url('/') }}/public/js/master.js"></script>
 
         <script type="text/javascript">
             $(function () {
@@ -113,5 +106,6 @@
             });
         </script>
 
+        @yield('scripts')
     </body>
 </html>

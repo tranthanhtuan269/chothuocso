@@ -28,7 +28,21 @@ class Company extends Model
      *
      * @var array
      */
-    protected $fillable = ['user', 'banner', 'logo', 'name', 'sub_name', 'tax_code', 'sologan', 'size', 'address', 'description', 'images', 'lat', 'lng', 'youtube_link', 'site_url', 'show_master', 'slug'];
+    protected $fillable = [
+        'user_id', 
+        'banner', 
+        'logo', 
+        'name', 
+        'address', 
+        'information', 
+        'keyword', 
+        'description', 
+        'lat', 
+        'lng', 
+        'youtube_link', 
+        'site_url', 
+        'show_master', 
+        'slug'];
 
     /**
      * Return the sluggable configuration array for this model.

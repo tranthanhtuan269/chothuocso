@@ -41,6 +41,16 @@ trait HasRoles
             return $this->roles->contains('name', $role);
         }
 
+        if (is_array($role)) {
+            foreach ($role as $r) {
+                if ($this->hasRole($r)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         return !!$role->intersect($this->roles)->count();
     }
 

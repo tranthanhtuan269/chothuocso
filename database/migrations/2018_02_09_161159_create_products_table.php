@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
 
             $table->foreign('category_id')->references('id')->on('categories');
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->timestamps();
         });
     }
 

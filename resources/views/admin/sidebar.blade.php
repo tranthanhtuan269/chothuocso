@@ -11,7 +11,7 @@
                     <ul class="nav" role="tablist">
                         @foreach($section->items as $menu)
                             <li role="presentation">
-                                <a target="_self" target="_self" href="{{ url($menu->url) }}">
+                                <a href="{{ url($menu->url) }}">
                                     {{ $menu->title }}
                                 </a>
                             </li>

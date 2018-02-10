@@ -25,23 +25,19 @@ class CompanyController extends Controller {
     public function index(Request $request) {
         $keyword = $request->get('search');
         $perPage = 25;
-
-        if (!empty($keyword)) {
-            $company = \DB::table('companies')
-                    ->join('cities', 'cities.id', '=', 'companies.city')
-                    ->orWhere('companies.logo', 'LIKE', "%$keyword%")
-                    ->orWhere('companies.name', 'LIKE', "%$keyword%")
-                    ->orWhere('cities.name', 'LIKE', "%$keyword%")
+        $company = \DB::table('companies')
+                    ->select(
+                        'companies.id', 
+                        'companies.name', 
+                        'companies.address', 
+                        'companies.logo', 
+                        'companies.banner', 
+                        'companies.phone', 
+                        'companies.information', 
+                        'companies.show_master'
+                    )
                     ->orderBy('companies.created_at', 'desc')
-                    ->select('companies.logo', 'companies.name', 'cities.name as cityname', 'companies.id', 'companies.show_master')
                     ->paginate($perPage);
-        } else {
-            $company = \DB::table('companies')
-                        ->join('cities', 'cities.id', '=', 'companies.city')
-                        ->select('companies.logo', 'companies.name', 'cities.name as cityname', 'companies.id', 'companies.show_master')
-                        ->orderBy('companies.created_at', 'desc')
-                        ->paginate($perPage);
-        }
 
         return view('company.index', compact('company'));
     }
