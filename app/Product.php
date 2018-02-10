@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class CompanyType extends Model
+class Product extends Model
 {
     use Sluggable;
     /**
@@ -13,8 +13,7 @@ class CompanyType extends Model
      *
      * @var string
      */
-    protected $table = 'company_types';
-    public $timestamps = false;
+    protected $table = 'products';
 
     /**
     * The database primary key value.
@@ -28,8 +27,7 @@ class CompanyType extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'slug'];
-
+    protected $fillable = ['name', 'price', 'image', 'images', 'description', 'category_id', 'company_id'];
 
     /**
      * Return the sluggable configuration array for this model.
@@ -40,8 +38,18 @@ class CompanyType extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
+                'source' => ['name', 'id'],
+                'separator' => '_'
             ]
         ];
     }
+
+    public function category(){
+        return $this->belongsTo('App\Category');
+    }
+
+    public function company(){
+        return $this->belongsTo('App\Company');
+    }
+
 }

@@ -25,7 +25,5 @@ class Town extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'district'];
-
-    
+    protected $fillable = ['name', 'district_id'];
 }

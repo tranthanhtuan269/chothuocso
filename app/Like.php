@@ -4,16 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SaveCV extends Model
+class Like extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'save_cv';
-    public $timestamps = false;
-
+    protected $table = 'likes';
 
     /**
     * The database primary key value.
@@ -27,5 +25,7 @@ class SaveCV extends Model
      *
      * @var array
      */
-    protected $fillable = ['user', 'cv', 'created_at'];
+    protected $fillable = ['user', 'product'];
+
+    
 }

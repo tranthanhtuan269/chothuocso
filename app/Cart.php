@@ -4,14 +4,14 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Partner extends Model
+class Cart extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'partners';
+    protected $table = 'carts';
 
     /**
     * The database primary key value.
@@ -25,7 +25,13 @@ class Partner extends Model
      *
      * @var array
      */
-    protected $fillable = ['link', 'image'];
+    protected $fillable = ['user_id', 'product_id'];
 
-    
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+
+    public function product(){
+        return $this->belongsTo('App\Product');
+    }
 }

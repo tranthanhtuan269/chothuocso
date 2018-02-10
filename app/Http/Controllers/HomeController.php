@@ -30,6 +30,12 @@ class HomeController extends Controller
 
     }
 
+    public function welcome()
+    {
+        
+        return view('welcome');
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -55,153 +61,6 @@ class HomeController extends Controller
                     ->get();  
 
         return view('home', compact('districts'));
-    }
-
-    public function welcome()
-    {
-        $company_id = -1;
-        $cv_id = -1;
-        if (\Auth::check()) {
-            $user_info = \Auth::user()->getUserInfo();
-            $company_id = $user_info['company_id'];
-            $cv_id = $user_info['cv_id'];
-        }
-        $jobGetObj = new Job;
-        $companyGetObj = new Company;
-        $cvGetObj = new CurriculumVitae;
-        $perPage = 1000;
-        $checkJobVip = 0;
-        $field = $district = $city = $job_type = $company = $cv = $vip = $from = $number_get = null;
-        $from  = 0;
-        $number_get = 10;
-
-        $title = '';
-        $description = '';
-        $keyword = '';
-
-        if(isset($_GET['district']) && is_numeric($_GET['district'])){
-            $district = (int)$_GET['district'];
-        }
-        
-        if(isset($_GET['city']) && is_numeric($_GET['city'])){
-            $city = (int)$_GET['city'];
-        }else if(isset($_GET['city']) && $_GET['city'] == 'other'){
-            $city = 1000;
-        }
-
-        if(isset($_GET['field'])){
-            $field = $_GET['field'];
-        }
-
-        if(isset($_GET['cv'])){
-            $cv = $_GET['cv'];
-        }
-
-        if(isset($_GET['job'])){
-            $job = $_GET['job'];
-        }else{
-            $job = null;
-        }
-        
-        if(isset($_GET['job_type'])){
-            $job_type = $_GET['job_type'];
-        }
-        
-        if(isset($_GET['company'])){
-            $company = $_GET['company'];
-        }
-
-        $partners = \App\Partner::take(5)->get();
-
-        if($district > 0){
-            // get district of city
-            $districtObj = \DB::table('districts')
-                        ->where('districts.id', '=', $district)
-                        ->where('districts.active', '=', 1)
-                        ->first();   
-
-            if($districtObj){
-                $city = $districtObj->city;
-
-                // get job of vip
-                $jobsvip1 = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, 1, $from, $number_get);
-
-                // get job of vip
-                $jobsvip2 = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, 2, $from, $number_get);
-
-                // get job of vip
-                $jobs = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, $vip, $from, $number_get);
-
-                // get cv of vip
-                $cvs = $cvGetObj->getCV($district, $city, $from, 10);
-                // get cv of vip
-                $companies = $companyGetObj->getCompany($district, $city, $field, $from, 20);
-            }else{
-                return redirect('/');
-            }
-        }else{
-
-            if(isset($_GET['city']) && is_numeric($_GET['city'])){
-                $city = (int)$_GET['city'];
-            }
-            
-            if($city == 0){
-                // get district of city
-                $districts = \DB::table('districts')
-                            ->where('districts.city', '=', 1)
-                            ->where('districts.active', '=', 1)
-                            ->get(); 
-                // get job of vip
-                $jobs = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, $vip, $from, $number_get);
-                
-                // get job of vip
-                $jobsvip1 = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, 1, $from, $number_get);
-
-                // get job of vip
-                $jobsvip2 = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, 2, $from, $number_get);
-
-                // get cv of vip
-                $cvs = $cvGetObj->getCV($district, $city, $from, 10);
-                // get cv of vip
-                $companies = $companyGetObj->getCompany($district, $city, $field, $from, 20);
-            }else{
-                // get district of city
-                $districts = \DB::table('districts')
-                            ->where('districts.city', '=', $city)
-                            ->where('districts.active', '=', 1)
-                            ->get(); 
-                // get job of vip
-                $jobs = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, $vip, $from, $number_get);
-                
-                // get job of vip
-                $jobsvip1 = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, 1, $from, $number_get);
-
-                // get job of vip
-                $jobsvip2 = $jobGetObj->getJob($district, $city, $field, $job_type, $company, $cv, 2, $from, $number_get);
-
-                // get cv of vip
-                $cvs = $cvGetObj->getCV($district, $city, $from, 10);
-                // get cv of vip
-                $companies = $companyGetObj->getCompany($district, $city, $field, $from, 20);
-            }
-        }  
-        
-        $this_day = date('Y-m-d H:i:s');
-        $cvcount = \DB::table('curriculum_vitaes')->count();
-        $jobcount0 = \DB::table('jobs')
-                ->where('expiration_date', '=', date("d/m/Y"))
-                ->count();
-        $jobcount1 = \DB::table('jobs')
-                ->where('expiration_date', '=', date("d/m/Y", strtotime($this_day . ' +1 day')))
-                ->count();
-        $jobcount2 = \DB::table('jobs')
-                ->where('expiration_date', '=', date("d/m/Y", strtotime($this_day . ' +2 day')))
-                ->count();
-        $jobcount3 = \DB::table('jobs')
-                ->where('expiration_date', '=', date("d/m/Y", strtotime($this_day . ' +3 day')))
-                ->count();
-
-        return view('welcome', compact('jobcount0', 'jobcount1', 'jobcount2', 'jobcount3', 'cvcount' ,'districts', 'city', 'cvs', 'jobs', 'jobsvip1', 'jobsvip2', 'companies', 'company_id', 'cv_id', 'partners'));
     }
 
     public function getDistrict($id){
@@ -633,13 +492,12 @@ class HomeController extends Controller
             $cv_id = $user_info['cv_id'];
         }
 
-        $job_types = \DB::table('job_types')
-                        ->select('id', 'name', 'slug')
-                        ->get();
+        // $job_types = \DB::table('job_types')
+        //                 ->select('id', 'name', 'slug')
+        //                 ->get();
 
         $cities = \DB::table('cities')
-                        ->where('active', '=', 1)
-                        ->select('id', 'name', 'slug')
+                        ->select('id', 'name')
                         ->get();
         // dd($cv_id);
         // get job of vip
@@ -649,7 +507,7 @@ class HomeController extends Controller
                 ->orderBy('companies.created_at', 'desc')
                 ->take(6)
                 ->get();
-        return view('welcome3', compact('job_types', 'cities', 'companies', 'company_id', 'cv_id'));
+        return view('welcome3', compact('cities', 'companies', 'company_id', 'cv_id'));
     }
     
     public function action(){

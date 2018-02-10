@@ -25,7 +25,13 @@ class Comment extends Model
      *
      * @var array
      */
-    protected $fillable = ['title', 'description', 'star', 'company'];
+    protected $fillable = ['content', 'product_id', 'user_id'];
 
-    
+    public function product(){
+        return $this->belongsTo('App\Product');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

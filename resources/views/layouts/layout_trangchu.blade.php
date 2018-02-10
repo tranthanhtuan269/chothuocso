@@ -68,19 +68,19 @@
           <nav id="menu" class="pull-right">
             <ul>
               <?php 
-                  $menuListParent = \App\Category::where('status', 1)->where('parent',0)->select('id', 'name', 'slug')->get();
+                  $menuListParent = \App\Category::where('status', 1)->where('parent_id',0)->select('id', 'name', 'slug')->get();
                   foreach ($menuListParent as $menuParent) {
               ?>
-                  <li><a href="{{ url('/') }}/{{ $menuParent->slug }}">{{ $menuParent->name }}</a>
+                  <li><a href="{{ url('/') }}/category/{{ $menuParent->id }}/{{ $menuParent->slug }}">{{ $menuParent->name }}</a>
                       <?php 
-                          $menuListChild = \App\Category::where('status', 1)->where('parent',$menuParent->id)->select('id', 'name', 'slug')->get();
+                          $menuListChild = \App\Category::where('status', 1)->where('parent_id',$menuParent->id)->select('id', 'name', 'slug')->get();
                           if(count($menuListChild) > 0){
                       ?>
                       <ul>
                           <?php 
                               foreach ($menuListChild as $menuChild) {
                           ?>                                            
-                          <li><a href="{{ url('/') }}/{{ $menuChild->slug }}">{{ $menuChild->name }}</a></li> 
+                          <li><a href="{{ url('/') }}/category/{{ $menuChild->id }}/{{ $menuChild->slug }}">{{ $menuChild->name }}</a></li> 
                           <?php
                               }
                           ?>                                 

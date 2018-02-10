@@ -7,12 +7,6 @@ use Cviebrock\EloquentSluggable\Sluggable;
 
 class City extends Model
 {
-    use Sluggable;
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'cities';
     public $timestamps = false;
 
@@ -29,19 +23,9 @@ class City extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'active', 'slug'];
+    protected $fillable = ['name'];
 
-    /**
-     * Return the sluggable configuration array for this model.
-     *
-     * @return array
-     */
-    public function sluggable()
-    {
-        return [
-            'slug' => [
-                'source' => 'name'
-            ]
-        ];
+    public function districts(){
+        return $this->hasMany('App\District');
     }
 }
